@@ -1,10 +1,16 @@
 # 🚀 Inventory Kubernetes Deployment
 
-Production-ready Kubernetes deployment for a containerized ASP.NET Core Web API with SQL Server.
+Production-style Kubernetes deployment for a containerized ASP.NET Core Web API with SQL Server.
 
 ---
 
-## 🧱 Architecture
+## 🏗️ Architecture
+
+Client → Ingress → Service → API Pod → SQL Server Pod
+
+---
+
+## 📦 Components
 
 - ASP.NET Core Web API (Dockerized)
 - SQL Server (containerized)
@@ -13,68 +19,55 @@ Production-ready Kubernetes deployment for a containerized ASP.NET Core Web API 
 
 ---
 
-## ⚙️ Tech Stack
+## 📁 Project Structure
 
-- .NET 8
+```
+k8s/
+  namespace/
+  api/
+  database/
+  ingress/
+```
+
+---
+
+## ⚙️ Deployment Steps
+
+```bash
+kubectl apply -f k8s/namespace/
+kubectl apply -f k8s/database/
+kubectl apply -f k8s/api/
+kubectl apply -f k8s/ingress/
+```
+
+---
+
+## 🌐 Access
+
+Add to /etc/hosts:
+
+```
+127.0.0.1 inventory.local
+```
+
+Then open:
+
+http://inventory.local
+
+---
+
+## 🛠️ Tech Stack
+
+- Kubernetes
 - Docker
-- Kubernetes (k8s)
+- ASP.NET Core (.NET 8)
 - SQL Server
 - NGINX Ingress
 
 ---
 
-## 📁 Project Structure
+## 📌 Notes
 
-k8s/
-├── namespace.yaml      # Namespace definition  
-├── deployment.yaml     # API deployment  
-├── service.yaml        # Internal service  
-├── ingress.yaml        # External access via NGINX  
-└── sqlserver.yaml      # SQL Server pod  
-
----
-
-## 🚀 How to Run
-
-### 1. Apply Kubernetes configs
-
-kubectl apply -f k8s/
-
-### 2. Verify resources
-
-kubectl get pods -n inventory-app  
-kubectl get svc -n inventory-app  
-
----
-
-## 🌐 Access API
-
-Add to `/etc/hosts`:
-
-127.0.0.1 inventory.local  
-
-Then open:
-
-http://inventory.local  
-
----
-
-## 📌 Features
-
-- Containerized microservice architecture  
-- Kubernetes deployment with namespace isolation  
-- Internal service communication  
-- External access via Ingress  
-- SQL Server integration  
-
----
-
-## 📷 Notes
-
-This project demonstrates real-world DevOps practices including container orchestration and service exposure using Kubernetes.
-
----
-
-## 👨‍💻 Author
-
-Usman 
+- Uses ClusterIP service for internal communication
+- Ingress routes external traffic
+- Environment variables used for DB connection
