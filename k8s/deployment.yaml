@@ -20,4 +20,7 @@ spec:
         - containerPort: 8080
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Server=sqlserver;Database=InventoryDb;User Id=sa;Password=Your_password123;"
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: ConnectionString
